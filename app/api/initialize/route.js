@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { initializeTransaction } from '@/lib/paystack';
 
-const CURRENCY = process.env.PAYSTACK_CURRENCY || 'KES';
+const CURRENCY = (process.env.PAYSTACK_CURRENCY || 'KES').trim();
 
 export async function POST(request) {
   try {
