@@ -3,6 +3,10 @@ import { initializeTransaction } from '@/lib/paystack';
 
 const CURRENCY = (process.env.PAYSTACK_CURRENCY || 'KES').trim();
 
+// Offer M-Pesa (mobile money) first, with card as a fallback. Card always works;
+// mobile_money shows only if it's enabled on the Paystack account.
+const CHANNELS = ['mobile_money', 'card'];
+
 export async function POST(request) {
   try {
     const { email, amount, name } = await request.json();
@@ -28,6 +32,7 @@ export async function POST(request) {
       amount: Math.round(numericAmount * 100),
       currency: CURRENCY,
       callbackUrl: `${origin}/payment/callback`,
+      channels: CHANNELS,
       metadata: {
         custom_fields: [
           {

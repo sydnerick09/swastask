@@ -55,13 +55,13 @@ export default function PaymentPage() {
           <div className="dot">₭</div>
           <div>
             <h1>SWAS Pay</h1>
-            <p>Secure checkout</p>
+            <p>M-Pesa &amp; card · KES</p>
           </div>
         </div>
 
         <div className="lead">
-          <h2>Make a payment</h2>
-          <span>Enter your details below to pay securely in KES.</span>
+          <h2>Pay with M-Pesa</h2>
+          <span>Enter your details to pay securely in KES via M-Pesa or card.</span>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -119,11 +119,13 @@ export default function PaymentPage() {
           </div>
 
           <button className="pay-btn" type="submit" disabled={loading}>
-            {loading ? 'Redirecting…' : `Pay ${amount ? 'KES ' + Number(amount).toLocaleString() : 'now'}`}
+            {loading
+              ? 'Redirecting…'
+              : `Pay ${amount ? 'KES ' + Number(amount).toLocaleString() : 'now'} with M-Pesa`}
           </button>
         </form>
 
-        <p className="secure">🔒 Payments are processed securely by Paystack.</p>
+        <p className="secure">🔒 Pay with M-Pesa or card — secured by Paystack.</p>
       </div>
     </main>
   );
