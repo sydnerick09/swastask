@@ -1,13 +1,18 @@
 import crypto from 'crypto';
 import { NextResponse } from 'next/server';
+import { getSecretKey } from '@/lib/paystack';
 
 // Paystack webhook receiver. Configure the URL in your Paystack dashboard:
 //   Settings → API Keys & Webhooks → Webhook URL = https://<your-app>.vercel.app/api/webhook
 // This is the most reliable way to confirm payments (independent of the browser
 // redirect, which a user could close before it completes).
 export async function POST(request) {
-  const secret = process.env.PAYSTACK_SECRET_KEY;
-  if (!secret) {
+  let secret;
+  try {
+    // getSecretKey() trims the env value — Paystack signs with the clean key,
+    // so a stray newline here would make every real webhook fail verification.
+    secret = getSecretKey();
+  } catch {
     return NextResponse.json({ error: 'Server not configured.' }, { status: 500 });
   }
 
